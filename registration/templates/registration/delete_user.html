@@ -1,0 +1,17 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+{% if request.user.is_authenticated and request.user.is_superuser %}   
+    <h1>Usuń użytkownika...</h1>
+    <br/><br/>
+    <h3>Usuń: @{{ user.username }}</h3>
+    <br/>
+    <div class="form=group">
+    <form method="POST">
+        {% csrf_token %}
+        <strong>Na pewno!?</strong><br/><br/>
+        <button type="submit" class="save btn btn-dark">Usuń</button>
+    </div>
+{% else %}
+You're not allowed here!
+{% endif %}
+{% endblock %}

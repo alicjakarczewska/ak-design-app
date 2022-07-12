@@ -1,0 +1,56 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+
+{% block content %}
+<br/><br/><br/>
+<h1>Zarządzanie portalem</h1>
+
+<div class="row" style="text-align: center;">
+    <div class="col">
+        <br/><br/>
+        <h4>Blog</h4>
+        <p><a href="{% url 'post_list' %}">Lista opublikowanych postów</a></p>
+        <p><a href="{% url 'post_new' %}">Utwórz nowy post</a></p>
+        <p><a href="{% url 'post_draft_list' %}">Posty do opublikowania</a></p>
+        
+        <br/>
+
+        <h4>Użytkownicy</h4>
+        <p><a href="{% url 'user_list' %}">Lista użytkowników</a></p>
+
+        <br/>
+
+        <h4>Oferta</h4>
+        <p><a href="{% url 'offer' %}">Lista usług</a></p>
+        <p><a href="{% url 'add_service' %}">Dodaj nową usługę</a></p>
+        
+    </div>
+    <div class="col">
+        <img src="{% static 'images/Remote ideation.png' %}" style="width:700px"/>
+    </div>
+    <div class="col">
+        <br/><br/><br/>
+        <h4>Kursy</h4>
+        <p><a href="{% url 'courses' %}">Lista kursów i lekcji</a></p>
+        <p><a href="{% url 'add_course' %}">Dodaj nowy kurs</a></p>
+        <p><a href="{% url 'add_lesson' %}">Dodaj nową lekcję</a></p>
+        <br/>
+
+        <br/><br/>
+
+        <h4>Galeria</h4>
+        <p><a href="{% url 'album_list' %}">Lista kategorii</a></p>
+        <p><a href="{% url 'add_picture' %}">Dodaj nową pracę</a></p>
+        <p><a href="{% url 'add_album' %}">Dodaj nową kategorię</a></p>
+        <br/>
+        
+        <br/>
+    </div>
+</div>
+
+
+
+
+
+
+{% endblock %}

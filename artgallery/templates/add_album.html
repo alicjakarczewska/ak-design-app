@@ -1,0 +1,25 @@
+{% extends 'blog/base.html' %}
+{% block title %}
+    Dodaj nowy album
+{% endblock %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+
+{% if user.is_authenticated %}
+    {% if request.user.is_superuser %}
+    <h1>Dodaj nowy album...</h1>
+    
+    <div class="form=group">
+    <form method="POST">
+        {% csrf_token %}
+        {{form|crispy}}
+        <button type="submit" class="save btn btn-dark">Dodaj</button>
+
+    </div>
+
+    {% else %}
+        Brak dostępu!
+    {% endif %}
+{% endif %}
+{% endblock %}

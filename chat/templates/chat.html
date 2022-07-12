@@ -1,0 +1,136 @@
+{% extends 'blog/base.html' %}
+
+{% load static %}
+
+{% block content %}
+<br/><br/><br/>
+
+<h1>Wiadomości</h1>
+
+<br/>
+<div class="row">
+
+  {% if request.user.is_superuser %}
+  
+  <div class="col-md-3 border-right"  >
+   
+    {% for message in messages %}
+    <a class="{% if active_direct == message.user.username %}is-active{% endif %}" href="{% url 'directs' message.user.username %}">
+    <div class="content">
+      <p>
+         
+      {% if message.unread %}
+      <div style=" color: red;">
+        <strong>{{ message.user.first_name }} {{ message.user.last_name }}</strong> <small>@{{ message.user.username }}</small> - <strong> {{ message.unread }}  </strong> <i class="fa fa-commenting"></i>
+      </div>
+      {% else %}
+        <strong>{{ message.user.first_name }} {{ message.user.last_name }}</strong> <small>@{{ message.user.username }}</small>
+      {% endif %}     
+      </p> 
+      <hr>
+    </div>
+  </a>
+    {% endfor %}
+    
+    
+    <a href="{% url 'usersearch' %}" class="button is-success">
+      <button type="button" a href="{% url 'contact' %}" class="btn btn-outline-dark float-right">
+        Nowa wiadomość...
+      </button>
+    </a>
+
+  </div>
+  {% else %}
+  {% if not directs %}
+      {% for user in users %}
+
+      
+        <div class="col" style="text-align: justify; text-justify: inter-word;">
+          <p class="lead">
+            <br/>
+            Chcesz zamówić grafikę lub masz pomysł na projekt indywidualny? 
+            <br /><br />
+            <a href="{% url 'newconversation' user.username %}" class="button is-info">Napisz do mnie!</a>
+            <br/><br />
+            Omówimy szczegóły i wycenę projektu, by jak najlepiej odpowiadał Twoim potrzebom. 
+            <br /><br />
+            Wszystkie wiadomości w jednym miejscu pozwolą w każdej chwili wrócić do naszych ustaleń
+            oraz sprawnie się kontaktować :) 
+          </p>
+        </div>
+        <div class="col">
+          <img src="{% static 'images/Letter between friends.png' %}" style="width:700px"/>
+        </div>
+      
+      
+    {% endfor %}
+  {% endif %}
+
+  {% endif %}
+  
+
+  {% if directs %}
+  <div class="col">
+    
+    <div style="overflow-y: scroll; height: 30em">
+
+      {% for direct in directs %}
+        <div class="box">
+          <article class="media">
+            {% if direct.sender.username == request.user.username %}
+            <div class="col-md-10 ml-auto">
+              <div class="container">
+                <p style="text-align:right">
+                  <strong>{{ direct.sender.first_name }} {{ direct.sender.last_name }}</strong> <small>@{{ direct.sender.username }}</small> 
+                  <small>{{ direct.date|date:'d-m-Y H:i'}}</small>
+                </p>                
+                  <div class="alert alert-primary float-right">
+                    {{ direct.body }} 
+                  </div>
+              </div>
+            </div>
+            {% else %}
+            <div class="col-md-10">
+              <div class="container">
+                <p >
+                  <strong>{{ direct.sender.first_name }} {{ direct.sender.last_name }}</strong> <small>@{{ direct.sender.username }}</small> on: <strong><small>{{ direct.date|date:'N d G:i'}}</small></strong>
+                </p>                
+                <div class="alert alert-secondary float-left">
+                    {{ direct.body }} 
+                  </div>
+              </div>
+            </div>
+            {% endif %}
+          </article>
+        </div>
+        {% endfor %}   
+        <br/>       
+         
+        </div>
+        <form role="form" method="POST" action="{% url 'send_direct' %}">
+          {% csrf_token %}
+        
+          
+          
+            <input type="hidden" name="to_user" value="{{ active_direct }}">
+            <div class="form-group">
+              <textarea name="body" 
+              class="form-control mb-30" rows="4" placeholder="Napisz wiadomość..."></textarea>
+
+            </div>
+            
+            <div class="col-12 ">
+                <button type="submit" name="action" class="btn btn-dark float-right">
+                    Wyślij!
+                </button>        
+            </div>
+          
+        </form>       
+      
+  </div>  
+  {% endif %}
+</div>
+
+<br/><br/>
+
+{% endblock %}

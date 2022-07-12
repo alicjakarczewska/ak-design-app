@@ -1,0 +1,64 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% block content %}
+
+
+<br/><br/>
+{% if message_name %}
+<center>
+    <h2>Twoja wiadomość została wysłana, {{ message_name }}!</h2>
+    <p id="wiadomosc">Wkrótce dostaniesz odpowiedź :)</p>
+</center>
+<br/><br/>
+{% else %}
+<center>
+    <h4>Skontaktuj się!</h4>
+    <p>
+        Spodobała Ci się któraś z grafik? Chcesz zamówić spersonalizowany projekt, <br />zapytać o kurs 
+        lub nawiązać współpracę? A może masz inne pytanie? 
+        <br /><br />
+        Napisz do mnie poniżej lub przejdź do 
+        <a href="/inbox"><span class="glyphicon glyphicon-log-in"></span>wiadomości</a>, 
+        by zacząć lub kontynuować rozmowę przez stronę!
+    </p>
+
+</center>
+<br/><br/>
+<div class="row justify-content-md-center">
+    <div class="col-12 col-md-8">
+        <!-- form -->
+        <div class="contact-form">
+            <form action="{% url 'contact' %}" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input type="text" name="message-name"
+                    class="form-control mb-30" placeholder="Imię">
+                </div>
+                <div class="form-group">
+                    <input type="text" name="message-surname"
+                    class="form-control mb-30" placeholder="Nazwisko">
+                </div>
+                <div class="form-group">
+                    <input type="email" name="message-email"
+                    class="form-control mb-30" placeholder="E-mail">                    
+                </div>
+                <div class="form-group">
+                    <textarea name="message" 
+                    class="form-control mb-30" rows="4" placeholder="Twoja wiadomość"></textarea>
+
+                </div>
+                <center>
+                    <div class="col-12 ">
+                    <button type="submit" class="btn btn-outline-dark">
+                        Wyślij!
+                    </button>        
+                </div>
+                </center>
+                
+            </form>
+        </div>
+    </div>    
+</div>
+{% endif %}
+
+{% endblock %}

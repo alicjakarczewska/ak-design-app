@@ -1,0 +1,33 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<h1>Kursy i lekcje</h1>
+Dostępne kursy: 
+{% for course in courses_menu %}
+   <a href = "{% url 'course' course.name|slugify %}">{{ course.name }}</a> | 
+{% endfor %}
+<br/><br/>
+<ul>
+{% for lesson in object_list %}
+    
+        <a href="{% url 'lesson_detail' lesson.pk %}">{{ lesson.title }}</a>
+        {% if user.is_authenticated %}
+            {% if user.id == lesson.author.id %}
+                <small>
+                - 
+                <a href="{% url 'update_lesson' lesson.pk %}">Edytuj</a>        
+                - 
+                <a href="{% url 'delete_lesson' lesson.pk %}">Usuń</a>
+                </small>
+            {% endif %}
+        {% endif %}
+        <br/>
+        <small> <strong>{{ lesson.course }}</strong> lekcja {{lesson.lesson_number}}  </small>
+        
+        <br/>
+        {{ lesson.body|slice:":200"|safe }}
+    <hr>
+{% endfor %}
+</ul>
+
+{% endblock %}

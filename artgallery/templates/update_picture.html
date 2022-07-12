@@ -1,0 +1,23 @@
+{% extends 'blog/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+{% if user.is_authenticated %}
+    {% if user.id == picture.author.id %}   
+        <h1>Edytuj pracę...</h1>
+        
+        <div class="form=group">
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.media }}
+            {{ form.as_p }}
+            <button type="submit" class="save btn btn-dark">Edytuj i zapisz</button>
+
+        </div>
+    {% else %}
+    Brak dostępu!
+    {% endif %}
+{% else %}
+    Brak dostępu!
+{% endif %}
+{% endblock %}

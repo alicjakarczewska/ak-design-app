@@ -1,0 +1,30 @@
+{% extends 'blog/base.html' %}
+{% block title %}
+    Dodaj nową pracę
+{% endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+{% if user.is_authenticated %}
+    {% if request.user.is_superuser %}
+    <h1>Dodaj nową pracę...</h1>
+    
+    <div class="form=group">
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.media }}
+        {{form|crispy}}
+        <button type="submit" class="save btn btn-dark">Dodaj</button>
+
+    </div>
+
+    <script>
+        var name = "{{ user.id }}";
+        document.getElementById("elder").value
+            = name;
+    </script>
+    {% else %}
+        Brak dostępu!
+    {% endif %}
+{% endif %}
+{% endblock %}

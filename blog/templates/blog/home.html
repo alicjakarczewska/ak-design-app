@@ -1,0 +1,48 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% block content %}
+
+
+<br/><br/><br/>
+
+<div class="row">
+    <div class="col">
+        <h1>Poznaj grafikę!</h1>
+        <br/>
+        <p class="lead text-justify">
+            Szukasz grafiki dla siebie? Chcesz nauczyć się ją tworzyć lub udoskonalić swoje umiejętności?
+            <br/>
+            Trafiłeś w odpowiednie miejce!
+            <br/><br/>
+            Rozpoczynasz swoją przygodę z grafiką komputerową? Podoba Ci się, ale nie wiesz od czego zacząć?
+            <br/> 
+            Skorzystaj z oferty <strong><a href="{% url 'course_list' %}">kursów</a></strong> i wybierz ten, 
+            który najbardziej pomoże Ci rozwinąć skrzydła.
+            <br /><br/>
+            Potrzebujesz grafiki do swojego biznesu? Chcesz upiększyć przestrzeń wokół <strong><a href="{% url 'artgallery' %}">oryginalną sztuką</a></strong>? 
+            <br />Zapoznaj się z <strong><a href="{% url 'offer' %}">ofertą</a></strong> i napisz do mnie,
+            a stworzymy wyjątkowy projekt specjalnie dla Ciebie.
+        </p>
+    </div>
+    <div class="col">
+        <img src="{% static 'images/Discuss talent requirements.png' %}" style="width:600px"/>
+    </div>
+</div>
+
+
+<br/><br/>
+    <center><a href="{% url 'contact' %}">
+        <button type="button" a href="{% url 'contact' %}" class="btn btn-outline-dark btn-lg">
+            Skontaktuj się</button></a>
+    </center>
+
+    <br/><br/><br/>
+    <p>System powstał na Wydziale Informatyki Politechniki Białostockiej.</p>
+    <hr>
+    <p>2022 © <a href="https://github.com/alicjakarczewska">Alicja Karczewska</a></p>
+
+    
+   
+
+
+{% endblock %}

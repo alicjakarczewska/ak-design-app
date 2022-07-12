@@ -1,0 +1,40 @@
+{% extends 'blog/base.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<form>
+  <div class="label">Szukaj użytkownika...</div>
+<div class="form-group">
+  <input  class="form-control mb-30" name="q" type="text" value="{{ request.GET.q }} " placeholder="Szukaj użytkownika...">
+
+</div>
+<center>
+  <div class="col-12 ">
+  <button type="submit" class="btn btn-outline-dark">
+      Szukaj
+  </button>        
+</div>
+</center>
+
+</form>
+{% for user in users %}
+ 
+  <div class="alert alert-light">
+    
+        <p>
+          <strong>{{ user.first_name }} {{ user.last_name }}</strong>
+          
+          <small>@{{ user.username }}</small>
+        
+      
+          <br/>
+          <a href="{% url 'newconversation' user.username %}" class="button is-info">Napisz wiadomość...</a>
+        </p>
+  </div>
+{% endfor %}
+	
+
+
+{% endblock %}

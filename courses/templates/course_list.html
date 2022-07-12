@@ -1,0 +1,23 @@
+{% extends 'blog/base.html' %}
+{% load static %}
+{% block title %}Kursy{% endblock %}
+
+{% block content %}
+
+    <div class="card-deck">
+        {% for course in courses_menu_list %}
+        <div class="card">
+          <img class="card-img-top" src="{{ course.course_image.url }}" alt="{{ course.name }}">
+          <div class="card-body">
+            <p class="lead"><a href = "{% url 'course' course.name|slugify %}">Kurs {{ course.name }}</a></p></h5>
+            <p class="card-text">{{course.description|linebreaks|truncatewords:40}}</p>
+          </div>
+        </div>
+        {% endfor %} 
+      </div>
+
+
+
+    
+
+{% endblock %}

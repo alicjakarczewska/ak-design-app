@@ -1,0 +1,33 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+
+{% if user.is_authenticated and user.is_superuser %}    
+    <a href="{% url 'update_course' course.pk %}" class="btn btn-outline-dark btn-sm" >Edytuj</a>
+    <a href="{% url 'delete_course' course.pk %}" class="btn btn-outline-dark btn-sm" >Usuń</a>        
+{% endif %}
+<h1 class="display-4">Kurs {{ crs }}</h1>
+
+{% if course_lessons %}
+    <ul class="list-group list-group-flush">
+    {% for lesson in course_lessons %}
+    <li class="list-group-item">
+        <p class="lead">
+        <strong>Lekcja {{lesson.lesson_number}}:
+        <a href="{% url 'lesson_detail' lesson.pk %}">{{ lesson.title }}</a></strong>
+        {% if user.is_authenticated and user.is_superuser %}
+        - 
+        <a href="{% url 'update_lesson' lesson.pk %}">Edytuj</a>        
+        - 
+        <a href="{% url 'delete_lesson' lesson.pk %}">Usuń</a>
+        {% endif %}
+        <br/>
+        {{ lesson.body|truncatewords:35|safe }}</p>
+    </li>
+    {% endfor %}
+{% else %}
+    <h4>Nic tu nie ma...</h4>
+{% endif %}
+
+
+{% endblock %}

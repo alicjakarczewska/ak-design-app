@@ -1,0 +1,23 @@
+{% extends 'blog/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+{% if user.is_authenticated %}
+    {% if user.id == lesson.author.id %}   
+        <h1>Edytuj lekcję...</h1>
+        
+        <div class="form=group">
+        <form method="POST">
+            {% csrf_token %}
+            {{ form.media }}
+            {{ form|crispy }}
+            <button type="submit" class="save btn btn-dark">Edytuj i zapisz</button>
+
+        </div>
+    {% else %}
+        You're not allowed here!
+    {% endif %}
+{% else %}
+    You're not allowed here!
+{% endif %}
+{% endblock %}

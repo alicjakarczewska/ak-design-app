@@ -1,0 +1,64 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        {% if user.id == lesson.author.id %}        
+        <a href="{% url 'update_lesson' lesson.pk %}" class="btn btn-outline-dark btn-sm" >Edytuj lekcję </a>
+        <a href="{% url 'delete_lesson' lesson.pk %}" class="btn btn-outline-dark btn-sm" >Usuń lekcję</a>
+        {% endif %}
+    
+    <h1 class="display-4">{{ lesson.title }}</h1>
+    <p class="lead">
+        <strong>Lekcja {{lesson.lesson_number}} | <a href = "{% url 'course' lesson.course|slugify %}">{{ lesson.course}}</a></strong>
+    </p>          
+    <hr>
+    <br/>
+
+    {% if lesson.video %}
+    <div class="embed-responsive embed-responsive-21by9">
+        <iframe class="embed-responsive-item" src="{{ lesson.video.url }}"></iframe>
+    </div>
+    {% endif %}
+    
+    
+    <br/><br/>
+    {{ lesson.body|safe }}
+    <br/>
+
+    <p>Zaznacz poniżej wykonanie lekcji. Pomoże Ci to obserwować swoje <a href="{% url 'user_account' %}">postępy</a> :)</p>
+
+    <form action="{% url 'done_lesson' lesson.pk %}"
+    method="POST">
+        {% csrf_token %}
+        {% if liked %}
+            <center>
+                <div class="col-12 ">
+                <button type="submit" name="lesson_id"
+                value="{{ lesson.id }}" class="btn btn-danger">
+                Niewykonana
+                </button>        
+            </div>
+            </center>
+        {% else %}
+            <center>
+                <div class="col-12 ">
+                <button type="submit" name="lesson_id"
+                value="{{ lesson.id }}" class="btn btn-outline-dark">
+                    Wykonana
+                </button>        
+            </div>
+            </center>
+        {% endif %}
+   
+    </form>
+
+    <hr>
+    <br/>
+    {% else %}
+
+    Tylko zalogowani użytkownicy mają dostęp do lekcji! <a href="{% url 'login' %}">Zaloguj się</a>.
+    
+    {% endif %}
+    
+
+{% endblock %}

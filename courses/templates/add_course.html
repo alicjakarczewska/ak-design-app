@@ -1,0 +1,22 @@
+{% extends 'blog/base.html' %}
+{% block title %}
+    Dodaj nowy kurs
+{% endblock %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+
+{% if user.is_authenticated %}
+<h1>Dodaj nowy kurs...</h1>
+ 
+<div class="form=group">
+<form method="POST">
+    {% csrf_token %}
+    {{form|crispy}}
+    <button type="submit" class="save btn btn-dark">Dodaj</button>
+
+</div>
+{% else %}
+You're not allowed here!
+{% endif %}
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+
+{% if request.user.is_authenticated and request.user.is_superuser %}
+
+<h1>Lista użytkowników</h1>
+
+<ul>
+    {% for u in user_list %}        
+            @{{ u.username }} 
+            {% ifnotequal u.username|stringformat:"s" request.user.username %}
+                - <a href="{% url 'delete_user' u.pk %}">Usuń użytkownika</a>
+            {% endifnotequal  %}
+            <br/>
+            <small> 
+                imię: <strong>{{ u.first_name }}</strong> <br/>
+                nazwisko: <strong>{{ u.last_name }}</strong> <br/>
+                e-mail: <strong>{{ u.email }}</strong> <br/>
+            </small>            
+        <hr>
+    {% endfor %}
+</ul>
+{% else %}
+You're not allowed here!
+{% endif %}
+
+{% endblock %}

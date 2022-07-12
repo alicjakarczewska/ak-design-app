@@ -1,0 +1,51 @@
+{% extends 'blog/base.html' %}
+{% block title %}
+    {{ post.title }}
+{% endblock %}
+{% block content %}
+    {% if user.is_authenticated %}
+        {% if user.id == post.author.id %}        
+        <a href="{% url 'post_edit' pk=post.pk %}" class="btn btn-outline-dark btn-sm" >Edytuj</a>
+        <a href="{% url 'post_remove' pk=post.pk %}" class="btn btn-outline-dark btn-sm" >Usuń</a>
+            {% if not post.published_date %}
+                <a href="{% url 'post_publish' pk=post.pk %}" class="btn btn-outline-dark btn-sm" >Publikuj</a>
+            {% endif %}
+        {% endif %}
+    {% endif %}
+    
+    <h1>{{ post.title }}</h1>
+    <small>Autor: {{ post.author.first_name }} 
+        {{ post.author.last_name }}
+    </small>
+    {% if post.published_date %}            
+        <small>| {{ post.published_date|date:'M d, Y' }}</small>
+    {% endif %}
+    <br/>
+    <hr>
+    {{ post.text|safe }}    
+    <br/><br/>
+    <p><a href="{% url 'post_list' %}">Powrót</a></p>
+    <br/>
+    <h4>Komentarze:</h4>
+    <p><a href="{% url 'add_comment_to_post' pk=post.pk %}">Napisz komentarz</a></p>
+    
+    {% for comment in post.comments.all %}    
+        {% if user.is_authenticated or comment.approved_comment %}
+        <div class="p-3 mb-3 bg-light rounded">
+            {% if not comment.approved_comment %}
+                <a class="btn btn-outline-dark btn-sm mb-3" href="{% url 'comment_remove' pk=comment.pk %}">Odrzuć</a>
+                <a class="btn btn-outline-dark btn-sm mb-3" href="{% url 'comment_approve' pk=comment.pk %}">Akceptuj</a>            
+            {% endif %}
+            <br/>
+            <strong>{{ comment.author }}</strong> 
+            <br/> 
+            <small>{{ comment.created_date }}</small>   
+            <p>{{ comment.text|linebreaks }}</p>
+        </div>
+        {% endif %}
+    {% empty %}
+        <p> Nie ma jeszcze żadnych komentarzy :(</p>
+    {% endfor %}
+    
+
+{% endblock %}

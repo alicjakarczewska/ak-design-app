@@ -1,0 +1,58 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+
+
+{% if request.user.is_authenticated and request.user.is_superuser %}
+
+<div class="row">
+    {% for service in object_list %}    
+      <div class="col-md-4">        
+        <div class="thumbnail">        
+          <img src="{{ service.service_image.url }}" alt="Lights" style="width:100%">
+          <p style="color:gray;">
+            <h5>{{ service.title }}</h5>
+            {{ service.description }}
+          <br/>
+          </p> 
+          <a href="{% url 'update_service' service.pk %}" class="btn btn-outline-dark btn-sm" >
+            Edytuj usługę
+          </a>
+          <a href="{% url 'delete_service' service.pk %}" class="btn btn-outline-dark btn-sm" >
+            Usuń usługę
+          </a><br/><br/>
+        </div>
+      </div>
+    {% endfor %} 
+</div>
+ {% else %}
+ 
+
+ <div class="row">
+  {% for service in object_list %}    
+  {% if service.is_active is True and not request.user.is_superuser %}
+    <div class="col-md-4">        
+      <div class="thumbnail">  
+        <br/>      
+        <img src="{{ service.service_image.url }}" alt="Lights" style="width:100%">  
+        <br/>  <br/>    
+        <h5 style="color:#FF683B; text-align: center;">{{ service.title }}</h5>
+        <p style="text-align: justify;text-justify: inter-word;">
+          {{ service.description }}
+        </p>         
+        <br/>
+        <br/><br/>
+      </div>
+    </div>
+    {% endif %}
+  {% endfor %}
+</div>
+
+<center><a href="{% url 'contact' %}">
+  <button type="button" a href="{% url 'contact' %}" class="btn btn-outline-dark btn-lg">
+      Skorzystaj z usługi</button></a>
+</center>
+<br/><br/>
+{% endif %}
+
+{% endblock %}

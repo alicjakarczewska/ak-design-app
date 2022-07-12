@@ -1,0 +1,17 @@
+{% extends 'blog/base.html' %}
+{% block content %}
+{% if user.is_authenticated %}
+        <h1>Usuń usługę...</h1>
+        <br/><br/>
+        <h3>Usuń: {{ service.title }}</h3>
+        <br/>
+        <div class="form=group">
+        <form method="POST">
+            {% csrf_token %}
+            <strong>Na pewno!?</strong><br/><br/>
+            <button type="submit" class="save btn btn-dark">Usuń</button>
+        </div>
+{% else %}
+You're not allowed here!
+{% endif %}
+{% endblock %}

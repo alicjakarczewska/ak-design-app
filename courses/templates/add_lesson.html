@@ -1,0 +1,28 @@
+{% extends 'blog/base.html' %}
+{% block title %}
+    Dodaj nową lekcję
+{% endblock %}
+{% load crispy_forms_tags %}
+{% block content %}
+
+{% if user.is_authenticated %}
+    <h1>Dodaj nową lekcję...</h1>
+    
+    <div class="form=group">
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.media }}
+        {{form|crispy}}
+        <button type="submit" class="save btn btn-dark">Dodaj</button>
+
+    </div>
+
+    <script>
+        var name = "{{ user.id }}";
+        document.getElementById("elder").value
+            = name;
+    </script>
+{% else %}
+You're not allowed here!
+{% endif %}
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-8">
+        {% if picture.header_image %}
+            <img src="{{ picture.header_image.url }}" class="img-fluid" alt="Responsive image">
+        {% endif %}
+    </div>
+    <div class="col">
+        
+        {% if user.is_authenticated %}
+            {% if user.id == picture.author.id %}        
+            <a href="{% url 'update_picture' picture.pk %}" class="btn btn-outline-dark btn-sm" >Edytuj</a>
+            <a href="{% url 'delete_picture' picture.pk %}" class="btn btn-outline-dark btn-sm" >Usuń</a>
+            {% endif %}
+        {% endif %}
+        <h1>{{ picture.title }}</h1>
+        <small> {{ picture.picture_date }} | <a href = "{% url 'album' picture.album|slugify %}">{{ picture.album}}</a> </small>
+        <br/>
+        <br/>
+        {{ picture.body|safe }}
+        {% if user.is_authenticated %}
+            {% if picture.album == "darmowe" %}
+                <a href="{{ picture.header_image.url }}" download>             
+                    <p class="lead">Pobierz grafikę</p>
+                </a>
+            {% endif %}
+            {% if picture.album == "grafiki" %}
+            
+                <p>W celu zakupu skontaktuj się, naciskając poniższy przycisk:</p>
+             
+                <a href="{% url 'contact' %}">
+                    <button type="button" class="btn btn-dark">Skontaktuj się!</button>             
+                </a>
+                <br/>
+            <br/>          
+            {% endif %}
+        {% endif %}
+        
+        
+        <form action="{% url 'like_post' picture.pk %}"
+    method="POST">
+        {% csrf_token %}
+    {% if user.is_authenticated %}
+        {% if liked %}
+            <button type="submit", name="picture_id",
+            value="{{ picture.id }}", 
+            class="btn btn-danger btn-sm">Usuń z ulubionych</button>
+        {% else %}
+            <button type="submit", name="picture_id",
+            value="{{ picture.id }}", 
+            class="btn btn-outline-dark btn-sm">Dodaj do ulubionych <span>&#10084;</span> </button>
+        {% endif %}
+    {% else %}
+    <a href="/login">Zaloguj się</a>, by dodać do ulubionych lub pobrać albo kupić grafiki.
+    {% endif %}
+    </form>
+    <br/><br/>
+    <center>
+        <div class="col-12"></div>
+        <a href="{% url 'artgallery' %}">
+            <p>
+                Wróć do galerii &#x21ba
+            </p>
+        </a>
+    </div>
+    </center>
+
+        
+    </div>
+    
+</div>
+
+<br/><br/>
+{% endblock %}

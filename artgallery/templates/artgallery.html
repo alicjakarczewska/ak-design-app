@@ -1,0 +1,36 @@
+{% extends 'blog/base.html' %}
+
+{% block content %}
+<center>
+<h5 style="color:#FF683B;">
+
+<a href = "{% url 'artgallery' %}">
+  galeria
+ </a> 
+{% for album in albums_menu %}
+|
+   <a href = "{% url 'album' album.name|slugify %}">
+     {{ album.name }}
+    </a>  
+{% endfor %}
+  </h5>
+</center>
+<br/>
+<div class="row">
+    {% for picture in object_list %}
+    <div class="col-md-4">
+      <div class="thumbnail">
+        <a href="{% url 'picture_detail' picture.pk %}">
+          <img src="{{ picture.header_image.url }}" alt="picture"  class="img-fluid" style="object-fit: cover; height:550px; width:100%;">          
+          <!-- <img src="{{ picture.image.url }}" alt="picture"  class="img-fluid" style="object-fit: cover; height:550px; width:100%;">           -->
+          <br/><br/>
+        </a>        
+      </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+
+
+{% endblock %}

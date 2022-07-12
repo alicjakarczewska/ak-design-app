@@ -1,0 +1,24 @@
+{% extends 'blog/base.html' %}
+
+{% block title %}
+Dodaj post...
+{% endblock %}
+
+{% load crispy_forms_tags %}
+{% block content %}
+{% if user.is_authenticated %}
+    {% if request.user.is_superuser %}
+    <h1>Pisanie postu...</h1>
+    <br/><br/>
+    <form method="POST" class="post-form">
+        {% csrf_token %}
+        {{ form.media }}
+        {{form|crispy}}
+    <button type="submit" class="save btn btn-dark" style="float:left;">Zapisz post</button>
+    {% else %}
+        Brak dostępu!
+    {% endif %}
+    {% else %}
+    Brak dostępu!
+{% endif %}
+{% endblock %}
