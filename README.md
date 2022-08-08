@@ -30,6 +30,16 @@ https://www.behance.net/gallery/124127171/Web-application-for-graphic-designers-
 
 The application was deployed through Heroku => https://ak-design.herokuapp.com/
 
+You can log in to the application using administrator or regular user credentials. It is also possible to set up your own account.
+
+1) Admin
+* Login: admin123
+* Password (reversed, without spaces): 3 2 1 o l s a h
+
+2) Regular User
+* Login: milena
+* Password (reversed, without spaces): 4 3 2 1 o l s a H
+
 ### How to run the application ###
 
 [PL] DjangoApplication/instrukcja_instalacji.txt
